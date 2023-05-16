@@ -48,16 +48,35 @@ POINT & POINT::operator * (double scalar){// Überladener Multiplikationsoperator
     return *newPoint;
 }
 void POINT::show(){
-    cout << "( "<<X<<" | " <<Y<<" )"<< endl;
+    cout << "( "<<X<<" | " <<Y<<" )";
 } // Ausgabe der Koordinaten in der Form ( x | y )
 POINT::~POINT(){}
 
 
 //LINE
-LINE::LINE (POINT *P1, POINT *P2){}
+LINE::LINE (POINT *P1, POINT *P2): POINT(*P1),P2(P2){
+//Werte für Parameter darstellung berechnen
+A = getY()-P2->getY();
+B = P2->getX() - getX();
+C = getX()*P2->getY() - P2->getX()*getY();
+}
+void LINE::getParmDarstellung(double &pA,double &pB,double &pC) const { //Methode wurde hinzugefuegt weil sonst der zugriff auf A,B und C unmöglich wäre
+    pA = A;
+    pB = B;
+    pC = C;
+}
 POINT * LINE::meets (const LINE *L){}  //Schnittpunkt für zwei Geraden
-bool LINE::parallelTo(const LINE *L){} //Feststellen, ob zwei Geraden parallel sind
-void LINE::show(){}
+bool LINE::parallelTo(const LINE *L){//Feststellen, ob zwei Geraden parallel sind
+    double A2,B2,C2;
+    L->getParmDarstellung(A2,B2,C2);
+    double temp = abs(A2*B - A * B2);
+    return temp < Epsilon;
+}
+void LINE::show(){
+    POINT::show();
+    cout << ",";
+    P2->show();
+    }
 
 
 //CIRCLE

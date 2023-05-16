@@ -40,15 +40,16 @@ class POINT{
 };  //Ende class POINT
 
 class LINE: public POINT{
-   private:
-      POINT * P2;   //pointer auf zweites POINT-Objekt für die Gerade
-      double A,B,C; //Werte für die Parameterdarstellung der  Geraden
-      void normalize(void); //Normalisierung nach Euklid, Verwendung im Konstruktor, kann weggelassen werden
-   public :
-      LINE (POINT *P1, POINT *P2); //Initialisierungskonstruktor
-      POINT * meets (const LINE *L);  //Schnittpunkt für zwei Geraden
-      bool parallelTo(const LINE *L); //Feststellen, ob zwei Geraden parallel sind
-      void show(); //Überschriebene Methode show, verwendet show von POINT: Ausgabe der Koordinaten in der Form ( x1 | y1 ), ( x2 | y2 )
+    private:
+        POINT * P2;   //pointer auf zweites POINT-Objekt für die Gerade
+        double A,B,C; //Werte für die Parameterdarstellung der  Geraden
+        void normalize(void); //Normalisierung nach Euklid, Verwendung im Konstruktor, kann weggelassen werden
+    public :
+        LINE (POINT *P1, POINT *P2); //Initialisierungskonstruktor
+        POINT * meets (const LINE *L);  //Schnittpunkt für zwei Geraden
+        void getParmDarstellung(double &pA,double &pB,double &pC) const;
+        bool parallelTo(const LINE *L); //Feststellen, ob zwei Geraden parallel sind
+        void show(); //Überschriebene Methode show, verwendet show von POINT: Ausgabe der Koordinaten in der Form ( x1 | y1 ), ( x2 | y2 )
 
 }; //class LINE
 

@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1684241147 source:c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\main.cpp
+	<iostream>
+	"Myclasses.h"
+
+1684241395 c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\myclasses.h
+
+1684241436 source:c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\myclasses.cpp
+	"Myclasses.h"
+	<iostream>
+	<cmath>
+

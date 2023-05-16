@@ -8,6 +8,7 @@ Enthält den Code der Methoden der Klassen POINT, LINE und CIRCLE
 */
 #include "Myclasses.h"
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 //POINT
@@ -15,15 +16,17 @@ using namespace std;
 POINT::POINT(){}
 POINT::POINT (double X, double Y): X(X), Y(Y){}
 POINT::POINT (POINT & other){}
-double POINT::distanceTo(const POINT & other){}  // Abstand zweier POINT-Objekte
-double POINT::getX(){}
-double POINT::getY(){}
+double POINT::distanceTo(const POINT & other){
+    return sqrt(pow(X-other.getX(),2)+pow(Y-other.getY(),2));
+}  // Abstand zweier POINT-Objekte
+double POINT::getX()const {return X;}
+double POINT::getY() const {return Y;}
 POINT & POINT::operator = (const POINT &other){} // Überladener Zuweisungsoperator
 POINT & POINT::operator + (const POINT &other){} // Überladener Additionsoperator
 POINT & POINT::operator - (const POINT &other){} // Überladener Subtraktionsoperator
 POINT & POINT::operator * (double scalar){}  // Überladener Multiplikationsoperator, POINT * SkalarerWert
 void POINT::show(){
-    cout << "test" << endl;
+    cout << "( "<<X<<" | " <<Y<<" )"<< endl;
 } // Ausgabe der Koordinaten in der Form ( x | y )
 POINT::~POINT(){}
 

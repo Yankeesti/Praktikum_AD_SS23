@@ -1,7 +1,7 @@
 
 
 /* Dateiname: Myclasses.h:
-Programmkopf mit Programmname, Autor(en)...
+Author: Tim Heinsberg
 Beschreibung, usw.
 
 Achtung: Signaturen dürfen nicht geändert werden!
@@ -28,8 +28,8 @@ class POINT{
       POINT (double X, double Y); //Initialisierungskonstruktor
       POINT (POINT &); //Copy-Konstruktor
       double distanceTo(const POINT &);  // Abstand zweier POINT-Objekte
-      double getX();
-      double getY();
+      double getX() const;// musste auf const geändert werden da ich die Mehtode sonst in distance to nicht aufrufen kann
+      double getY() const;// musste auf const geändert werden da ich die Mehtode sonst in distance to nicht aufrufen kann
       POINT & operator = (const POINT &); // Überladener Zuweisungsoperator
       POINT & operator + (const POINT &); // Überladener Additionsoperator
       POINT & operator - (const POINT &); // Überladener Subtraktionsoperator

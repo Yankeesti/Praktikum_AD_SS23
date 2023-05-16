@@ -6,5 +6,7 @@ int main()
 {
     POINT* p = new POINT(2.0,4.0);
     POINT* p2 = new POINT(2.0,6.0);
-    cout << p->distanceTo(*p2)<< endl;
+    p->show();
+    p = &(*p*3);
+    p->show();
 }

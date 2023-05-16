@@ -15,16 +15,38 @@ using namespace std;
 
 POINT::POINT(){}
 POINT::POINT (double X, double Y): X(X), Y(Y){}
-POINT::POINT (POINT & other){}
-double POINT::distanceTo(const POINT & other){
+POINT::POINT (POINT & other): X(other.getX()), Y(other.getY()){}
+
+double POINT::distanceTo(const POINT & other){// Abstand zweier POINT-Objekte
     return sqrt(pow(X-other.getX(),2)+pow(Y-other.getY(),2));
-}  // Abstand zweier POINT-Objekte
+}
+
 double POINT::getX()const {return X;}
 double POINT::getY() const {return Y;}
-POINT & POINT::operator = (const POINT &other){} // Überladener Zuweisungsoperator
-POINT & POINT::operator + (const POINT &other){} // Überladener Additionsoperator
-POINT & POINT::operator - (const POINT &other){} // Überladener Subtraktionsoperator
-POINT & POINT::operator * (double scalar){}  // Überladener Multiplikationsoperator, POINT * SkalarerWert
+
+POINT & POINT::operator = (const POINT &other){// Überladener Zuweisungsoperator
+    X = other.getX();
+    Y = other.getY();
+    return *this;
+}
+POINT & POINT::operator + (const POINT &other){// Überladener Additionsoperator
+    double newX = X+other.getX();
+    double newY = Y+other.getY();
+    POINT* newPoint = new POINT(newX,newY);
+    return *newPoint;
+}
+POINT & POINT::operator - (const POINT &other){// Überladener Subtraktionsoperator
+    double newX = X-other.getX();
+    double newY = Y-other.getY();
+    POINT* newPoint = new POINT(newX,newY);
+    return *newPoint;
+}
+POINT & POINT::operator * (double scalar){// Überladener Multiplikationsoperator, POINT * SkalarerWert
+    double newX = X*scalar;
+    double newY = Y*scalar;
+    POINT* newPoint = new POINT(newX,newY);
+    return *newPoint;
+}
 void POINT::show(){
     cout << "( "<<X<<" | " <<Y<<" )"<< endl;
 } // Ausgabe der Koordinaten in der Form ( x | y )

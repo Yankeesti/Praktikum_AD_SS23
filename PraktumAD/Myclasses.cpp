@@ -65,7 +65,18 @@ void LINE::getParmDarstellung(double &pA,double &pB,double &pC) const { //Method
     pB = B;
     pC = C;
 }
-POINT * LINE::meets (const LINE *L){}  //Schnittpunkt für zwei Geraden
+POINT * LINE::meets (const LINE *L){
+    if(parallelTo(L)){
+        return nullptr;
+    }else{
+        double A2,B2,C2;
+        L->getParmDarstellung(A2,B2,C2);
+        double nenner = A2*B-A*B2;
+        double newX = (B2*C-C2*B)/nenner;
+        double newY = (C2*A-A2*C)/nenner;
+        POINT * outPut = new POINT(newX,newY);
+        return outPut;}
+}  //Schnittpunkt für zwei Geraden
 bool LINE::parallelTo(const LINE *L){//Feststellen, ob zwei Geraden parallel sind
     double A2,B2,C2;
     L->getParmDarstellung(A2,B2,C2);

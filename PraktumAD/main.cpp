@@ -4,14 +4,24 @@ using namespace std;
 
 int main()
 {
-    POINT* p = new POINT(1.0,0.0);
-    POINT* p2 = new POINT(5.0,4.0);
-    LINE* L = new LINE(p,p2);
+    POINT* p = new POINT(3,8);
+    CIRCLE * c = new CIRCLE(p,15);
 
-    POINT* Lp = new POINT(1.0,4.0);
-    POINT* Lp2 = new POINT(5.0,5.0);
-    LINE* L2 = new LINE(Lp,Lp2);
 
-    POINT * SchnittPunkt = L->meets(L2);
-    SchnittPunkt->show();
-}
+    POINT* p2 = new POINT(6,5);
+    CIRCLE* c2 = new CIRCLE(p2,1);
+
+    POINT** s1 = new POINT*;
+    POINT** s2 = new POINT*;
+    int anzahl = 0;
+    c->meetsOther(c2,anzahl,s1,s2);
+
+    cout << " Die Kreise haben: " << anzahl <<" Schnittpunkte"<< endl;
+
+    if(anzahl != 0){
+        (*s1)->show();
+        if(anzahl == 2)
+        (*s2)->show();
+    }
+
+  }

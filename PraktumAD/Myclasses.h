@@ -60,6 +60,7 @@ class CIRCLE: public POINT{
    public:
       CIRCLE (POINT *M, double R); //Initialisierungskonstruktor 1
       CIRCLE (POINT *,POINT *,POINT *); //Initialisierungskonstruktor 2
+      double getRadius();
       POINT* getMiddle();
       void show(); //Überschriebene Methode show, verwendet show von POINT: Ausgabe des Mittelpunktes und des Radius
       bool isInCircle(const POINT &);

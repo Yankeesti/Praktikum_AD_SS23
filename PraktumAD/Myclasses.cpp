@@ -32,8 +32,7 @@ POINT & POINT::operator = (const POINT &other){// Überladener Zuweisungsoperator
 POINT & POINT::operator + (const POINT &other){// Überladener Additionsoperator
     double newX = X+other.getX();
     double newY = Y+other.getY();
-    POINT* newPoint = new POINT(newX,newY);
-    return *newPoint;
+    return *(new POINT(newX,newY));
 }
 POINT & POINT::operator - (const POINT &other){// Überladener Subtraktionsoperator
     double newX = X-other.getX();
@@ -91,9 +90,66 @@ void LINE::show(){
 
 
 //CIRCLE
-CIRCLE::CIRCLE (POINT *M, double R){} //Initialisierungskonstruktor 1
+CIRCLE::CIRCLE (POINT *M, double R): POINT(*M),Radius(R){} //Initialisierungskonstruktor 1
 CIRCLE::CIRCLE (POINT *A,POINT *B,POINT *C){} //Initialisierungskonstruktor 2
 CIRCLE::POINT* getMiddle(){}
+double CIRCLE::skPro(POINT & a,POINT &b){
+    return a.getX()*b.getX()+a.getY()*b.getY();
+}
+double CIRCLE::getRadius(){return Radius;}
+POINT* CIRCLE::getMiddle(){
+    return new POINT(getX(),getY());
+}
 void CIRCLE::show(){} //Überschriebene Methode show, verwendet show von POINT: Ausgabe des Mittelpunktes und des Radius
-bool CIRCLE::isInCircle(const POINT &){}
-void CIRCLE::meetsOther(CIRCLE *C, int &Anzahl, POINT **S1, POINT **S2){} //C wird übergeben, Anzahl, S1 und S2 kommen zurück
+bool CIRCLE::isInCircle(const POINT & P){
+ return distanceTo(P) < Radius;
+}
+void CIRCLE::meetsOther(CIRCLE *C, int &Anzahl, POINT **S1, POINT **S2){
+
+    //Anzahl schnittpunkte berechnen
+    double distance =distanceTo(*C);
+
+    if(isInCircle(*C)){
+        double temp = distance+C->Radius;
+        if(temp < Radius || distance < Epsilon){//kein schnittPunkt
+            Anzahl = 0;
+        }else if(temp == Radius){
+            Anzahl = 1;
+        }else{
+            Anzahl = 2;
+        }
+    }else{
+        if(distance > Radius + C->getRadius() ){//Es gibt keinen Schnittpunkt
+            Anzahl = 0;
+        }else if(distance == Radius + C->getRadius()){//ein schittpunkt
+                Anzahl = 1;
+        }else{
+            Anzahl = 2;
+        }
+    }
+
+
+
+    //Berechnung
+        if(Anzahl > 0){
+            double c = (skPro(*C,*C)-skPro(*this,*this))-(C->getRadius()*C->getRadius()-Radius*Radius);
+        POINT n1 = *this-*C;
+        n1 = n1*2;
+        POINT n2(n1.getY()*-1,n1.getX());
+        double n1Betrag = n1.distanceTo(POINT(0,0));
+        double ls = -((c)/(pow(n1Betrag,2)));
+
+        double p = (skPro(n2,*this)); //Teil vor der wurzel
+        p = p/(n1Betrag*n1Betrag);
+
+        double a = ((c*c)/(pow(n1Betrag,4)));//erster Bruch des subtrahenten in der wurzel
+        a += ((2*c*skPro(n1,*this))/pow(n1Betrag,4));//zweiter Bruch des subtrahenten in der wurzel
+        a += ((skPro(*this,*this)-pow(Radius,2))/(pow(n1Betrag,2)));
+
+        double Ms1 = p + sqrt(pow(p,2)-a);
+        double Ms2 = p - sqrt(pow(p,2)-a);
+
+        *S1 = new POINT(n1*ls + n2*Ms1);
+        *S2 = new POINT(n1*ls + n2*Ms2);
+        }
+   } //C wird übergeben, Anzahl, S1 und S2 kommen zurück

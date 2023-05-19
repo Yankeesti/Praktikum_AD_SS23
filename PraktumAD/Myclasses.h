@@ -46,11 +46,12 @@ class LINE: public POINT{
         void normalize(void); //Normalisierung nach Euklid, Verwendung im Konstruktor, kann weggelassen werden
     public :
         LINE (POINT *P1, POINT *P2); //Initialisierungskonstruktor
+        bool onLine(POINT *);
         POINT * meets (const LINE *L);  //Schnittpunkt für zwei Geraden
         void getParmDarstellung(double &pA,double &pB,double &pC) const;
         bool parallelTo(const LINE *L); //Feststellen, ob zwei Geraden parallel sind
         void show(); //Überschriebene Methode show, verwendet show von POINT: Ausgabe der Koordinaten in der Form ( x1 | y1 ), ( x2 | y2 )
-
+        ~LINE();
 }; //class LINE
 
 class CIRCLE: public POINT{
@@ -60,11 +61,17 @@ class CIRCLE: public POINT{
    public:
       CIRCLE (POINT *M, double R); //Initialisierungskonstruktor 1
       CIRCLE (POINT *,POINT *,POINT *); //Initialisierungskonstruktor 2
+      static void testPOINTS(int & ergebniss, POINT *,POINT *,POINT *);//Testet ob die Punkte zur generierung eines kreises legit sind
       double getRadius();
       POINT* getMiddle();
       void show(); //Überschriebene Methode show, verwendet show von POINT: Ausgabe des Mittelpunktes und des Radius
       bool isInCircle(const POINT &);
       void meetsOther(CIRCLE *C, int &Anzahl, POINT **S1, POINT **S2); //C wird übergeben, Anzahl, S1 und S2 kommen zurück
 };  //class CIRCLE
+
+POINT* readPOINT();
+CIRCLE* readCIRCLE();
+int readInt(int min,int max);
+double readDouble(double min,double max);
 
 #endif // MYCLASSES_H_INCLUDED:"

@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1684435950 source:c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\main.cpp
+1684512658 source:c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\main.cpp
 	<iostream>
+	<limits>
 	"Myclasses.h"
 
-1684439248 c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\myclasses.h
+1684509904 c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\myclasses.h
 
-1684439272 source:c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\myclasses.cpp
+1684511822 source:c:\users\tim\desktop\uni\semester\4.semester\ad\praktika\praktikum_ad\praktumad\myclasses.cpp
 	"Myclasses.h"
 	<iostream>
 	<cmath>

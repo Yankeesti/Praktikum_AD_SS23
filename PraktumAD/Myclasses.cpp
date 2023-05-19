@@ -23,6 +23,8 @@ double POINT::distanceTo(const POINT & other){// Abstand zweier POINT-Objekte
 
 double POINT::getX()const {return X;}
 double POINT::getY() const {return Y;}
+void POINT::setX(double newX){X = newX;}
+void POINT::setY(double newY){Y = newY;}
 
 POINT & POINT::operator = (const POINT &other){// Überladener Zuweisungsoperator
     X = other.getX();
@@ -53,11 +55,19 @@ POINT::~POINT(){}
 
 
 //LINE
-LINE::LINE (POINT *P1, POINT *P2): POINT(*P1),P2(P2){
+LINE::LINE (POINT *P1, POINT *P2): POINT(*P1){
+this->P2 = new POINT(*P2);
 //Werte für Parameter darstellung berechnen
 A = getY()-P2->getY();
 B = P2->getX() - getX();
 C = getX()*P2->getY() - P2->getX()*getY();
+}
+bool LINE::onLine(POINT *P){
+    //steigung der geraden berechnen
+    double s1 = (P2->getY()-getY())/(P2->getX()-getX());
+    //Steigung von einem punkt der geraden zum nächsten berechnen
+    double s2 = (P->getY()-getY())/(P->getX()-getX());
+    return s1 == s2;
 }
 void LINE::getParmDarstellung(double &pA,double &pB,double &pC) const { //Methode wurde hinzugefuegt weil sonst der zugriff auf A,B und C unmöglich wäre
     pA = A;
@@ -87,11 +97,72 @@ void LINE::show(){
     cout << ",";
     P2->show();
     }
+LINE::~LINE(){
+    delete P2;
+}
 
 
 //CIRCLE
 CIRCLE::CIRCLE (POINT *M, double R): POINT(*M),Radius(R){} //Initialisierungskonstruktor 1
-CIRCLE::CIRCLE (POINT *A,POINT *B,POINT *C){} //Initialisierungskonstruktor 2
+/*
+Punkte müssen im hauptprogramm wieder gelöscht werden
+und vor aufruf muss überprüft werden ob die punkte zulässig sind
+*/
+CIRCLE::CIRCLE (POINT *A,POINT *B,POINT *C){//Initialisierungskonstruktor 2
+    //Kreise erstellen
+    CIRCLE cOne(A,A->distanceTo(*B));
+    CIRCLE cTwo(B,B->distanceTo(*A));
+
+    CIRCLE cThree(B,B->distanceTo(*C));
+    CIRCLE cFour(C,C->distanceTo(*B));
+
+    POINT** s1 = new POINT*;
+    POINT** s2 = new POINT*;
+    int anzahl = 0;
+
+    cOne.meetsOther(&cTwo,anzahl,s1,s2);
+    //Gerade ermitteln
+    LINE l1(*s1,*s2);
+    delete *s1;
+    delete *s2;
+
+    cThree.meetsOther(&cFour,anzahl,s1,s2);
+    //Gerade ermitteln
+    LINE l2(*s1,*s2);
+    delete *s1;
+    delete *s2;
+
+    POINT * mittelPunkt = l1.meets(&l2);
+    setX(mittelPunkt->getX());
+    setY(mittelPunkt->getY());
+
+    Radius = mittelPunkt->distanceTo(*A);
+
+}
+/**
+*überrüft ob die 3 Punkte zulässige punkte für die erzeugung eines Kreises sind
+*
+*in ergebniss wird das ergebnis abgespeichert:
+*   0 = zulässig
+*   1 = nicht zulässig weil min. 2 Punkte gleich sind
+*   2 = nicht zulässig weil alle Punkte auf einer geraden liegen
+*/
+void CIRCLE::testPOINTS(int & ergebniss,POINT *A,POINT *B, POINT*C){
+    //Ueberpruefen ob Punkte unteschiedlich sind
+    if(A->distanceTo(*B) == 0 ||
+       A->distanceTo(*C) == 0 ||
+       B->distanceTo(*C) == 0){
+        ergebniss = 1;
+       }else{
+       LINE l(A,B);
+       if(l.onLine(C)){
+            ergebniss = 2;
+          }else{
+            ergebniss = 0;
+          }
+       }
+}
+
 CIRCLE::POINT* getMiddle(){}
 double CIRCLE::skPro(POINT & a,POINT &b){
     return a.getX()*b.getX()+a.getY()*b.getY();
@@ -100,7 +171,10 @@ double CIRCLE::getRadius(){return Radius;}
 POINT* CIRCLE::getMiddle(){
     return new POINT(getX(),getY());
 }
-void CIRCLE::show(){} //Überschriebene Methode show, verwendet show von POINT: Ausgabe des Mittelpunktes und des Radius
+void CIRCLE::show(){
+    POINT::show();
+    cout<<"\tRadius: " << Radius << endl;
+    } //Überschriebene Methode show, verwendet show von POINT: Ausgabe des Mittelpunktes und des Radius
 bool CIRCLE::isInCircle(const POINT & P){
  return distanceTo(P) < Radius;
 }

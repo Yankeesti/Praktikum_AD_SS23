@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    int auswahl = 0;
+    /*int auswahl = 0;
     CIRCLE *c1,*c2;
     POINT *s1,*s2;
     int anzahl;
@@ -44,7 +44,35 @@ int main()
         cout<<endl<<"Wählen Sie eine der Möglichkeiten:"<<endl<<"\t1) Weitere Kreise eingeben"<<endl<<"\t2) das Programm beenden"<<endl;
         auswahl = readInt(1,2);
         cout<<endl;
-     }
+     }*/
+
+     POINT M1(2,8);
+     POINT M2(6,8);
+
+     CIRCLE K1(&M1,M1.distanceTo(M2));
+     CIRCLE K2(&M2,M1.distanceTo(M2)*0.75);
+     int anzahl;
+     POINT **P1 = new POINT*;
+     POINT **P2 = new POINT*;
+     K1.meetsOther(&K2,anzahl,P1,P2);
+
+
+    cout<<anzahl;
+    cout << endl;
+    (*P1)->show();
+    cout << endl;
+    (*P2)->show();
+        cout<< endl;
+
+
+    K1.show();
+    K2.show();
+
+    delete *P1;
+    delete *P2;
+    delete P1;
+    delete P2;
+
   }
 
 POINT * readPOINT(){

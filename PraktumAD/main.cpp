@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    /*int auswahl = 0;
+    int auswahl = 0;
     CIRCLE *c1,*c2;
     POINT *s1,*s2;
     int anzahl;
@@ -44,8 +44,8 @@ int main()
         cout<<endl<<"Wählen Sie eine der Möglichkeiten:"<<endl<<"\t1) Weitere Kreise eingeben"<<endl<<"\t2) das Programm beenden"<<endl;
         auswahl = readInt(1,2);
         cout<<endl;
-     }*/
-
+     }
+/*
      POINT M1(2,8);
      POINT M2(6,8);
 
@@ -72,7 +72,7 @@ int main()
     delete *P2;
     delete P1;
     delete P2;
-
+*/
   }
 
 POINT * readPOINT(){
@@ -122,7 +122,6 @@ CIRCLE * readCIRCLE(){
                 delete pointArray[i];
             }
             // Das Array löschen
-            delete[] pointArray;
             return outPut;
         }
     }
